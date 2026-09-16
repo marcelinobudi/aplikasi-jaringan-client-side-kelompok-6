@@ -4,5 +4,8 @@ project(client_networks C)
 
 set(CMAKE_C_STANDARD 17)
 
-add_executable(client_networks "src/main.c")
+add_executable(client_networks 
+    "src/main.c"
+    "src/testing.c"
+)
 target_include_directories(client_networks PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")

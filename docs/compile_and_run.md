@@ -6,7 +6,6 @@ sudo dnf install cmake -y
 ```
 
 ## Setup 
-Run this command only once
 ```bash
 cmake -B build
 ```
