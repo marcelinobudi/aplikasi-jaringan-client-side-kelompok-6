@@ -16,7 +16,7 @@ Server Response
 ```text
 CHECK $RESULT
 ```
-`$RESULT`: Either `ACTIVE` or `INACTIVE` <br>
+`$RESULT`:  `ACTIVE` or `INACTIVE` <br>
 
 ## SERVICE REQUEST
 ### CHARACTER_COUNT
@@ -79,7 +79,7 @@ Client
 ```text
 ACK $RESULT
 ```
-`$RESULT`: either `TRUE` or `FALSE` <br>
+`$RESULT`:  `TRUE` or `FALSE` <br>
 Server
 ```text
 OK
