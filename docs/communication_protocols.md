@@ -84,3 +84,9 @@ Server
 ```text
 OK
 ```
+
+## SERVER ERROR
+Server
+```text
+ERROR $ERROR_MESSAGE
+```
