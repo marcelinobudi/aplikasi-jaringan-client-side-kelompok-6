@@ -43,6 +43,7 @@ int send_message(client_socket *client, char* message) {
 }
 
 int receive_message(client_socket *client, char* message) {
+    strcpy(message, "");
     if(recv(client->sock_fd, message, BUFFER_SIZE, 0) < 0) {
         perror("failed to receive data");
         return -1;
