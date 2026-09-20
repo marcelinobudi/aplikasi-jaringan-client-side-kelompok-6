@@ -2,6 +2,7 @@
 #define CLIENT_SOCKET_H
 #include <arpa/inet.h>
 #define BUFFER_SIZE 1024
+
 typedef struct client_socket {
     struct sockaddr_in serv_addr;
     int sock_fd;
