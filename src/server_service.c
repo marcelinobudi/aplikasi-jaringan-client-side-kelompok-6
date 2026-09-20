@@ -19,6 +19,14 @@ server_service* service_init(){
     return service;
 }
 
+bool service_error_check(char* message, char* error_message) {
+    char *temp;
+    if(sscanf(message, "ERROR %s", error_message) < 0) {
+        return 0;
+    }
+    return 1;
+}
+
 void service_stop(server_service *service) {
     close_socket(&service->client);
 }
@@ -47,9 +55,16 @@ int service_availibility_check(server_service* service, char* service_name, bool
         close_socket(&service->client);
         return -1;
     }
-    strcpy(message, "");
-    if(sscanf("CHECK %s", message) < 0) {
-        perror("server_availibity_check sscanf");
+    char *temp;
+    if(sscanf(message, "CHECK %s", temp) < 0) {
+        if(service_error_check(message, temp)) {
+            char *temp2;
+            sprintf(temp2, "server_availibity_check server error -> %s", temp);
+            perror(temp2);
+        } else {
+            perror("server_availibity_check sscanf");
+        }
+        
         return -1;
     }
 
