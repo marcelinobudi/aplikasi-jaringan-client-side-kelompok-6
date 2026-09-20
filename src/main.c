@@ -45,7 +45,6 @@ int main() {
 
         if(service_testing(service, user_input, message) < 0) {
             printf("error");
-            service_stop(service);
             return 1;
         }
         printf("Message: %s\n", message);
