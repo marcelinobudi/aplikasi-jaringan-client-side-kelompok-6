@@ -59,8 +59,8 @@ int service_availibility_check(server_service* service, char* service_name, bool
     if(sscanf(message, "CHECK %s", temp) < 0) {
         if(service_error_check(message, temp)) {
             char *temp2;
-            sprintf(temp2, "server_availibity_check server error -> %s", temp);
-            perror(temp2);
+            sprintf(temp2, "server_availibity_check server error: %s", temp);
+            printf(temp2);
         } else {
             perror("server_availibity_check sscanf");
         }
@@ -73,8 +73,39 @@ int service_availibility_check(server_service* service, char* service_name, bool
     } else if(strcmp(message, "INACITVE" == 0)) {
         service_active = false;
     } else {
-        perror("server_availibility_check server outputs formats");
+        printf("server_availibility_check server outputs format error");
         return -1;
     }
+    return 0;
+}
+
+
+int service_acknowledgement(server_service *service, bool is_valid) {
+    char *result;
+    if(is_valid) {
+        result = "TRUE";
+    } else {
+        result = "FALSE";
+    }
+    char message[BUFFER_SIZE];
+    sprintf(message, "ACK %s", result);
+    if(send_message(&service->client, message) < 0) {
+        close_socket(&service->client);
+        return -1;
+    } 
+    strcpy(message, "");
+    if(receive_message(&service->client, message) < 0) {
+        close_socket(&service->client);
+        return -1;
+    }
+
+    char *temp;
+    if(service_error_check(message, temp)) {
+        char *temp2;
+        sprintf(temp2, "server_acknowledgement server error -> %s", temp);
+        perror(temp2);
+        return -1;
+    } 
+    
     return 0;
 }
