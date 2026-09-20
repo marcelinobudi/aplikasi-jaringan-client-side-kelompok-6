@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -5,12 +6,8 @@
 #include "client_networks/client_socket.h"
 
 #define PORT 8080
-#define BUFFER_SIZE 1024
 
-typedef struct {
-    struct sockaddr_in serv_addr;
-    int sock_fd;
-} client_socket;
+typedef struct client_socket client_socket;
 
 int connect_to_server(client_socket *client) {
 
@@ -38,7 +35,7 @@ int connect_to_server(client_socket *client) {
 }
 
 int send_message(client_socket *client, char* message) {
-    if(send(client->sock_fd, message, strlen(message), 0) < 0) {
+    if(send(client->sock_fd, message, sizeof(message), 0) < 0) {
         perror("failed to send data");
         return -1;
     }
