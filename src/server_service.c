@@ -40,6 +40,7 @@ server_service* service_init(){
 
 void service_stop(server_service *service) {
     close_socket(&service->client);
+    free(service);
 }
 
 int service_testing(server_service* service, char* user_input, char* output) {
