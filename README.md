@@ -13,7 +13,7 @@ Aplikasi client akan berkomunikasi dengan aplikasi server yang memiliki spesifik
 - Mengembalikan jumlah kata dari string yang dikirimkan dari klien
 - Mengembalikan string yang dibalik urutannya dari string yang dikirim klien
 - Mengembalikan string tanpa huruf vokal dari string yang dikirim klien
-- Mengembalikan nilai determinan dan invers matriks dari suatu matriks 3x3 yang dikirimkan klien <br>
+- Mengembalikan nilai determinan dan invers matriks dari suatu matriks 3x3 yang dikirimkan klien <br><br>
 Setiap klien melakukan request kepada server, server secara random mengirimkan jawaban yang salah kepada klien. Klien harus memeriksa hasil yang dikembalikan server dan mengirimkan acknowledgement ke server bahwa hasil yang diterima tersebut benar atau tidak. <br>
 
 ## Panduan
