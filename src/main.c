@@ -8,7 +8,8 @@
 #include "client_networks/matrix.h"
 
 enum ServerService {
-    CHARACTER_COUNT = '1',
+    USER_EXIT = 0,
+    CHARACTER_COUNT,
     WORD_COUNT,
     REVERSE_STRING,
     STRING_WITHOUT_VOWELS,
@@ -26,8 +27,10 @@ void character_count(server_service *service) {
     }
 
     char text[BUFFER_SIZE-10]; // "10 char reserved for 'REQUEST ' and the rest for safety"
-    printf("input string: ");
+    printf("Masukkan string/teks: ");
     fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0'; 
+    
 
     size_t num;
     if(service_character_count(service, text, &num) < 0) {
@@ -46,8 +49,10 @@ void word_count(server_service *service) {
     }
 
     char text[BUFFER_SIZE-10]; // "10 char reserved for 'REQUEST ' and the rest for safety"
-    printf("input string: ");
+    printf("Masukkan string/teks: ");
     fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0'; 
+    
 
     size_t num;
     if(service_word_count(service, text, &num) < 0) {
@@ -65,8 +70,10 @@ void t_reverse_string(server_service *service) {
     }
 
     char text[BUFFER_SIZE-10]; // "10 char reserved for 'REQUEST ' and the rest for safety"
-    printf("input string: ");
+    printf("Masukkan string/teks: ");
     fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0'; 
+    
 
     char reversed[BUFFER_SIZE];
     if(service_reverse_string(service, text, reversed) < 0) {
@@ -89,8 +96,10 @@ void string_without_vowels(server_service *service) {
     }
 
     char text[BUFFER_SIZE-10]; // "10 char reserved for 'REQUEST ' and the rest for safety"
-    printf("input string: ");
+    printf("Masukkan string/teks: ");
     fgets(text, sizeof(text), stdin);
+    text[strcspn(text, "\n")] = '\0'; 
+    
 
     char without_vowels[BUFFER_SIZE];
     if(service_string_without_vowels(service, text, without_vowels) < 0) {
@@ -113,9 +122,11 @@ void determinan_and_inverse_matrix(server_service *service) {
 
     double matrix[3][3];
     printf("input matrix: ");
-    if(scanf("%lf %lf %lf %lf %lf %lf %lf %lf %lf", matrix[0][0], matrix[0][1], matrix[0][2], matrix[1][0], matrix[1][1], matrix[1][2], matrix[2][0], matrix[2][1], matrix[2][2]) < 9) {
-        printf("Input tidak valid.");
-        return;
+    printf("Masukkan 9 elemen matriks 3x3 (pisahkan dengan spasi/enter):\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            scanf("%lf", &matrix[i][j]);
+        }
     }
 
     double d_determinan;
@@ -148,25 +159,25 @@ void tampilkan_menu() {
     printf("Pilih layanan (0-5): ");
 }
 int main() {
-  /*
+  
     server_service *service = service_init();
     if(service == NULL) {
         return 1;
     }
 
-    while(1) {
-        printf("input: ");
-        char user_input[50];
-        fgets(user_input, sizeof(user_input), stdin);
-        user_input[strcspn(user_input, "\n")] = '\0'; // remove '\n'
+    int user_input;
+    bool program_running = 1;
+    while(program_running) {
+        tampilkan_menu();
+        if (scanf("%d", &user_input) != 1) break;
+        getchar(); 
 
-        // EXIT
-        if(strcmp(user_input, "exit") == 0) {
-            printf("[+] EXIT\n");
-            break;
-        }
-
-        switch(user_input[0]) {
+        switch(user_input) {
+            case USER_EXIT: {
+                printf("Keluar dari program.\n");
+                program_running = 0;
+                break;
+            }
             case CHARACTER_COUNT: {
                 character_count(service);
                 break;
@@ -188,51 +199,12 @@ int main() {
                 break;
             } 
             default : {
-                printf("Input tidak valid");
+                printf("Pilihan tidak valid, coba lagi.\n");
             }
         }
     }
     
     service_stop(service);
-    */
-
-    int pilihan;
-    char input_string[256];
-    double matrix[3][3];
-    while (1) {
-        tampilkan_menu();
-        if (scanf("%d", &pilihan) != 1) break;
-        getchar(); 
-
-        if (pilihan == 0) {
-            printf("Keluar dari program.\n");
-            break;
-        }
-        switch (pilihan) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                printf("Masukkan string/teks: ");
-                fgets(input_string, sizeof(input_string), stdin);
-                input_string[strcspn(input_string, "\n")] = 0; 
-                
-                printf("\n[SISTEM] Mengirim data ke server: \"%s\"\n", input_string);
-                break;
-            case 5:
-                printf("Masukkan 9 elemen matriks 3x3 (pisahkan dengan spasi/enter):\n");
-                for (int i = 0; i < 3; i++) {
-                    for (int j = 0; j < 3; j++) {
-                        scanf("%lf", &matrix[i][j]);
-                    }
-                }
-                printf("\n[SISTEM] Mengirim Matriks 3x3 ke server...\n");
-                break;
-
-            default:
-                printf("Pilihan tidak valid, coba lagi.\n");
-        }
-    }
-
+    
     return 0;
 }
