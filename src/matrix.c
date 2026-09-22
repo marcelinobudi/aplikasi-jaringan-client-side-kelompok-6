@@ -67,7 +67,6 @@ int inverse_matrix(double matrix[3][3], double inversed[3][3]) {
     inversed[2][2] =
         (matrix[0][0] * matrix[1][1] -
          matrix[0][1] * matrix[1][0]) / det;
-
     return 0;
 }
 
