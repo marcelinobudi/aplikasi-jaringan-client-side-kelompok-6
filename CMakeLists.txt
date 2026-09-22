@@ -9,5 +9,7 @@ add_executable(client_networks
     "src/testing.c"
     "src/matrix.c"
     "src/stringx.c"
+    "src/client_socket.c"
+    "src/server_service.c"
 )
 target_include_directories(client_networks PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include/")

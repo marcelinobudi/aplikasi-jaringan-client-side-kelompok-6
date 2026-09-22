@@ -18,3 +18,4 @@ Setiap klien melakukan request kepada server, server secara random mengirimkan j
 
 ## Panduan
 - <a href="docs/compile_and_run.md">Kompilasi dan jalankan program</a>
+- <a href="docs/communication_protocols.md">Protokol komunikasi client-server</a>
