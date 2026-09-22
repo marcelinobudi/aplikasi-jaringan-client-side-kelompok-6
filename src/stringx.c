@@ -52,10 +52,9 @@ int reverse_string(char *text, char* output) {
     return 0;
 }
 
-/*
-Mengembalikan string tanpa huruf vokal dari string
+
+//Mengembalikan string tanpa huruf vokal dari string
 kembalian = -1 => error
-*/
 
 int string_without_vocal_alphabet(char *text, char *output) {
     size_t j = 0;
@@ -65,7 +64,6 @@ int string_without_vocal_alphabet(char *text, char *output) {
             text[i] != 'e' && text[i] != 'o' &&
             text[i] != 'A' && text[i] != 'I' && text[i] != 'U' &&
             text[i] != 'E' && text[i] != 'O') {
-            
             output[j] = text[i];
             j++;
         }
