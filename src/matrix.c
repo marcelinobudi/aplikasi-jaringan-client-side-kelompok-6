@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 //menghitung nilai determinan matrix
 double determinan(double matrix[3][3]) {

@@ -19,7 +19,7 @@ static bool service_error_check(char* message, char* error_message) {
     return 1;
 }
 
-static int send_and_receive(server_service *service, const char *input, char *output) {
+static int send_and_receive(server_service *service, char *input, char *output) {
     if (send_message(&service->client, input) < 0 || receive_message(&service->client, output) < 0) {
         close_socket(&service->client);
         return -1;

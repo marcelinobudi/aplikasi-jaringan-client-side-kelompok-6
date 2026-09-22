@@ -16,9 +16,9 @@ enum ServerService {
     DETERMINAN_AND_INVERSE_MATRIX
 };
 bool is_service_available(server_service *service, char *service_name) {
-    char *service_availibility = "INACTIVE";
-    service_availibility_check(service, service_name, service_availibility);
-    return (strcmp(service_availibility, "ACTIVE") == 0);
+    bool service_availibility = false;
+    service_availibility_check(service, service_name, &service_availibility);
+    return service_availibility;
 }
 void character_count(server_service *service) {
     if(!is_service_available(service, "CHARACTER_COUNT")) {
@@ -200,6 +200,7 @@ int main() {
             } 
             default : {
                 printf("Pilihan tidak valid, coba lagi.\n");
+                program_running = 0;
             }
         }
     }
