@@ -35,7 +35,12 @@ int connect_to_server(client_socket *client) {
 }
 
 int send_message(client_socket *client, char* message) {
-    if(send(client->sock_fd, message, sizeof(message), 0) < 0) {
+    if (client == NULL || message == NULL) return -1;
+
+    // Kirim HANYA sepanjang string asli (ditambah 1 jika ingin menyertakan null-terminator)
+    size_t len = strlen(message);
+    
+    if (send(client->sock_fd, message, len, 0) < 0) {
         perror("failed to send data");
         return -1;
     }
@@ -43,11 +48,23 @@ int send_message(client_socket *client, char* message) {
 }
 
 int receive_message(client_socket *client, char* message) {
-    strcpy(message, "");
-    if(recv(client->sock_fd, message, BUFFER_SIZE, 0) < 0) {
+    if (client == NULL || message == NULL) return -1;
+
+
+    ssize_t bytes_received = recv(client->sock_fd, message, BUFFER_SIZE - 1, 0);
+
+    if (bytes_received < 0) {
         perror("failed to receive data");
         return -1;
+    } 
+    else if (bytes_received == 0) {
+
+        fprintf(stderr, "Connection closed by server.\n");
+        return -1;
     }
+
+
+    message[bytes_received] = '\0';
     return 0;
 }
 

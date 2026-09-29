@@ -86,7 +86,7 @@ void t_reverse_string(server_service *service) {
     }
     bool is_valid = strcmp(reversed, reversed_test) == 0;
     service_acknowledgement(service, is_valid);
-    printf("string terbalik (%s): %zu", (is_valid) ? "VALID": "INVALID", reversed);
+    printf("string terbalik (%s): %s", (is_valid) ? "VALID": "INVALID", reversed);
 
 }
 void string_without_vowels(server_service *service) {
@@ -112,7 +112,7 @@ void string_without_vowels(server_service *service) {
     }
     bool is_valid = strcmp(without_vowels, without_vowel_test) == 0;
     service_acknowledgement(service, is_valid);
-    printf("string tanpa vokal (%s): %zu", (is_valid) ? "VALID": "INVALID", without_vowels);
+    printf("string tanpa vokal (%s): %s", (is_valid) ? "VALID": "INVALID", without_vowels);
 }
 void determinan_and_inverse_matrix(server_service *service) {
     if(!is_service_available(service, "DETERMINAN_AND_INVERSE_MATRIX")) {
@@ -121,7 +121,7 @@ void determinan_and_inverse_matrix(server_service *service) {
     }
 
     double matrix[3][3];
-    printf("input matrix: ");
+    double d_determinan;
     printf("Masukkan 9 elemen matriks 3x3 (pisahkan dengan spasi/enter):\n");
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -129,7 +129,6 @@ void determinan_and_inverse_matrix(server_service *service) {
         }
     }
 
-    double d_determinan;
     double m_out[3][3];
     if(service_determinan_and_inverse_matrix(service, matrix, &d_determinan, m_out) < 0) {
         return;
@@ -144,8 +143,12 @@ void determinan_and_inverse_matrix(server_service *service) {
     bool is_valid = (d_determinan == determinan_test) && (is_matrix_equal(m_out, m_out_test));
     service_acknowledgement(service, is_valid);
     char *is_valid_str = (is_valid) ? "VALID": "INVALID";
-    printf("hasil determinan (%s): %lf", is_valid_str, d_determinan);
-    printf("hasil inverse matrix (%s): %lf %lf %lf %lf %lf %lf %lf %lf %lf", is_valid_str, m_out[0][0], m_out[0][1], m_out[0][2], m_out[1][0], m_out[1][1], m_out[1][2], m_out[2][0], m_out[2][1], m_out[2][2]);
+    printf("hasil determinan (%s): %lf\n", is_valid_str, d_determinan);
+    printf("hasil inverse matrix (%s):\n %lf %lf %lf \n%lf %lf %lf \n%lf %lf %lf\n", is_valid_str, m_out[0][0], m_out[0][1], m_out[0][2], m_out[1][0], m_out[1][1], m_out[1][2], m_out[2][0], m_out[2][1], m_out[2][2]);
+    if(!is_valid) {
+        printf("hasil determinan asli: %lf\n", determinan_test);
+        printf("hasil inverse matrix asli:\n %lf %lf %lf \n%lf %lf %lf \n%lf %lf %lf\n", m_out_test[0][0], m_out_test[0][1], m_out_test[0][2], m_out_test[1][0], m_out_test[1][1], m_out_test[1][2], m_out_test[2][0], m_out_test[2][1], m_out_test[2][2]);
+    }
 }
 
 void tampilkan_menu() {
